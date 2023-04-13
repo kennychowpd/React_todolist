@@ -1,4 +1,11 @@
 import React from "react";
+import Select from "react-select";
+
+const options = [
+	{ value: "all", label: "ALL" },
+	{ value: "completed", label: "Completed" },
+	{ value: "uncompleted", label: "Uncompleted" },
+];
 
 const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
 	//Here I can write JS code and function
@@ -6,7 +13,7 @@ const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
 		setInputText(e.target.value);
 	};
 	const submitTodoHandler = (e) => {
-    //PREVENT PAGE RELOAD
+		//PREVENT PAGE RELOAD
 		e.preventDefault();
 		setTodos([
 			...todos,
@@ -16,12 +23,12 @@ const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
 				id: Math.trunc(Math.random() * 100000000000),
 			},
 		]);
-    //RESET INPUT
+		//RESET INPUT
 		setInputText("");
 	};
 	const filterHandler = (e) => {
-		setFilter(e.target.value);
-	}
+		setFilter(e.value);
+	};
 	return (
 		<form>
 			<input
@@ -37,13 +44,67 @@ const Form = ({ inputText, setInputText, todos, setTodos, setFilter }) => {
 			>
 				<i className="fas fa-plus-square"></i>
 			</button>
-			<div className="select">
-				<select onChange={filterHandler} name="todos" className="filter-todo">
+			{/* Default Select */}
+			{/* <div className="select">
+				<select
+					onChange={filterHandler}
+					name="todos"
+					className="filter-todo"
+				>
 					<option value="all">ALL</option>
 					<option value="completed">Completed</option>
 					<option value="uncompleted">Uncompleted</option>
 				</select>
-			</div>
+			</div> */}
+			{/* React-select - better looking */}
+			<Select
+				onChange={filterHandler}
+				name="todos"
+				className="filter-todo"
+				options={options}
+				styles={{
+					container: (baseStyles) => ({
+						...baseStyles,
+						height: "57px",
+						marginLeft: "1rem",
+						width: "200px",
+						border: "none",
+					}),
+					control: (baseStyles) => ({
+						...baseStyles,
+						height: "100%",
+						borderRadius: "0px",
+						border: "none",
+					}),
+					indicatorsContainer: (baseStyles) => ({
+						...baseStyles,
+						height: "57px",
+						width: "57px",
+						backgroundColor: "#ff4a62",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}),
+					indicatorSeparator: () => ({
+					}),
+					menu: (baseStyles) => ({
+						...baseStyles,
+						margin: "0px",
+						border: "none",
+						borderRadius: "0px"
+
+					}),
+					placeholder: (baseStyles, state) => ({
+						...baseStyles,
+						color: "black",
+						fontFamily: "Poppins",
+					}),
+					option: (baseStyles, state) => ({
+						...baseStyles,
+						color: "black",
+					}),
+				}}
+			/>
 		</form>
 	);
 };

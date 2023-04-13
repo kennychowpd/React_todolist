@@ -69,6 +69,7 @@ function App() {
 				todos={todos}
 				filteredTodos={filteredTodos}
 			/>
+				
 		</div>
 	);
 }
